@@ -1,224 +1,560 @@
 <!DOCTYPE html>
-<html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-.w3-row-padding img {margin-bottom: 12px}
-/* Set the width of the sidebar to 120px */
-.w3-sidebar {width: 120px;background: #222;}
-/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-#main {margin-left: 120px}
-/* Remove margins from "page content" on small screens */
-@media only screen and (max-width: 600px) {#main {margin-left: 0}}
-</style>
-<body class="w3-black">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vladimir Batoćanin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-  <!-- Avatar image in top left corner -->
-  <img src="/w3images/avatar_smoke.jpg" style="width:100%">
-  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-black">
-    <i class="fa fa-home w3-xxlarge"></i>
-    <p>HOME</p>
-  </a>
-  <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>ABOUT</p>
-  </a>
-  <a href="#photos" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>PHOTOS</p>
-  </a>
-  <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>CONTACT</p>
-  </a>
-</nav>
+    :root {
+      --bg: #F7F5F0;
+      --bg-card: #F0EDE6;
+      --text: #1A1A18;
+      --muted: #6B6A65;
+      --accent: #B85C38;
+      --border: rgba(26, 26, 24, 0.12);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    }
 
-<!-- Navbar on small screens (Hidden on medium and large screens) -->
-<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-    <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
-    <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
-    <a href="#photos" class="w3-bar-item w3-button" style="width:25% !important">PHOTOS</a>
-    <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
-  </div>
-</div>
+    html { scroll-behavior: smooth; }
 
-<!-- Page Content -->
-<div class="w3-padding-large" id="main">
-  <!-- Header/Home -->
-  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
-    <h1 class="w3-jumbo"><span class="w3-hide-small">I'm</span> John Doe.</h1>
-    <p>Photographer and Web Designer.</p>
-    <img src="/w3images/man_smoke.jpg" alt="boy" class="w3-image" width="992" height="1108">
-  </header>
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
 
-  <!-- About Section -->
-  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-    <h2 class="w3-text-light-grey">My Name</h2>
-    <hr style="width:200px" class="w3-opacity">
-    <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur
-      adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    .container { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Nav ── */
+    nav {
+      padding: 2.5rem 0 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadein 0.6s ease 0.1s forwards;
+    }
+
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+
+    .nav-links a {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 7rem 0 5rem;
+      opacity: 0;
+      animation: fadein 0.8s ease 0.25s forwards;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 9vw, 5.2rem);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+
+    .tag {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Sections ── */
+    section {
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+    }
+
+    section.visible { animation: fadein 0.7s ease forwards; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* ── About ── */
+    .about-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.9;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    .about-text strong { font-weight: 500; }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; }
+
+    .exp-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-row:first-child { border-top: 1px solid var(--border); }
+
+    .exp-date {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 300;
+      padding-top: 3px;
+      letter-spacing: 0.03em;
+      line-height: 1.6;
+    }
+
+    .exp-role { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .exp-company { font-size: 12px; color: var(--accent); margin-bottom: 6px; font-weight: 400; }
+    .exp-desc { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+    /* ── Projects ── */
+    .projects-list { display: flex; flex-direction: column; }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      align-items: start;
+      transition: background 0.15s;
+    }
+
+    .project-row:first-child { border-top: 1px solid var(--border); }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .project-row:hover .project-name { color: var(--accent); }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tech-pill {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+    }
+
+    .project-arrow {
+      font-size: 12px;
+      color: var(--border);
+      padding-top: 4px;
+      flex-shrink: 0;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .project-row:hover .project-arrow { color: var(--accent); transform: translateX(3px); }
+
+    /* ── Stack ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stack-item {
+      background: var(--bg);
+      padding: 1rem 1.25rem;
+      font-size: 12px;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .stack-item:hover { background: var(--bg-card); color: var(--text); }
+
+    .stack-item .stack-name {
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── Contact ── */
+    .contact-links { display: flex; flex-direction: column; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .contact-link:first-child { border-top: 1px solid var(--border); }
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link .link-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--border);
+      font-weight: 300;
+    }
+
+    .contact-link:hover .link-label { color: var(--accent); opacity: 0.5; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: fadein 0.6s ease 1s forwards;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 560px) {
+      .exp-row { grid-template-columns: 1fr; gap: 0.25rem; }
+      .exp-date { padding-top: 0; }
+      .hero { padding: 4.5rem 0 3.5rem; }
+      .nav-links { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <nav>
+    <a class="nav-logo" href="#">vbatocanin</a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <p class="hero-eyebrow">Software Engineer · Belgrade</p>
+    <h1 class="hero-name">Vladimir<br>Batoćanin</h1>
+    <p class="hero-desc">
+      Backend-focused software engineer building production systems at Schneider Electric.
+      Doctoral researcher in Computer Science at the University of Belgrade.
+      Interested in machine learning, NLP, computer vision, and clean APIs.
     </p>
-    <h3 class="w3-padding-16 w3-text-light-grey">My Skills</h3>
-    <p class="w3-wide">Photography</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:95%"></div>
+    <div class="hero-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Django</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">NLP</span>
+      <span class="tag">Computer Vision</span>
+      <span class="tag">AWS</span>
+      <span class="tag">Docker</span>
+      <span class="tag">iOS</span>
     </div>
-    <p class="w3-wide">Web Design</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:85%"></div>
-    </div>
-    <p class="w3-wide">Photoshop</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:80%"></div>
-    </div><br>
-    
-    <div class="w3-row w3-center w3-padding-16 w3-section w3-light-grey">
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">11+</span><br>
-        Partners
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">55+</span><br>
-        Projects Done
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">89+</span><br>
-        Happy Clients
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">150+</span><br>
-        Meetings
-      </div>
-    </div>
-
-    <button class="w3-button w3-light-grey w3-padding-large w3-section">
-      <i class="fa fa-download"></i> Download Resume
-    </button>
-    
-    <!-- Grid for pricing tables -->
-    <h3 class="w3-padding-16 w3-text-light-grey">My Price</h3>
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-half w3-margin-bottom">
-        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-          <li class="w3-dark-grey w3-xlarge w3-padding-32">Basic</li>
-          <li class="w3-padding-16">Web Design</li>
-          <li class="w3-padding-16">Photography</li>
-          <li class="w3-padding-16">5GB Storage</li>
-          <li class="w3-padding-16">Mail Support</li>
-          <li class="w3-padding-16">
-            <h2>$ 10</h2>
-            <span class="w3-opacity">per month</span>
-          </li>
-          <li class="w3-light-grey w3-padding-24">
-            <button class="w3-button w3-white w3-padding-large w3-hover-black">Sign Up</button>
-          </li>
-        </ul>
-      </div>
-
-      <div class="w3-half">
-        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-          <li class="w3-dark-grey w3-xlarge w3-padding-32">Pro</li>
-          <li class="w3-padding-16">Web Design</li>
-          <li class="w3-padding-16">Photography</li>
-          <li class="w3-padding-16">50GB Storage</li>
-          <li class="w3-padding-16">Endless Support</li>
-          <li class="w3-padding-16">
-            <h2>$ 25</h2>
-            <span class="w3-opacity">per month</span>
-          </li>
-          <li class="w3-light-grey w3-padding-24">
-            <button class="w3-button w3-white w3-padding-large w3-hover-black">Sign Up</button>
-          </li>
-        </ul>
-      </div>
-    <!-- End Grid/Pricing tables -->
-    </div>
-    
-    <!-- Testimonials -->
-    <h3 class="w3-padding-24 w3-text-light-grey">My Reputation</h3>  
-    <img src="/w3images/bandmember.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
-    <p><span class="w3-large w3-margin-right">Chris Fox.</span> CEO at Mighty Schools.</p>
-    <p>John Doe saved us from a web disaster.</p><br>
-    
-    <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
-    <p><span class="w3-large w3-margin-right">Rebecca Flex.</span> CEO at Company.</p>
-    <p>No one is better than John Doe.</p>
-  <!-- End About Section -->
-  </div>
-  
-  <!-- Portfolio Section -->
-  <div class="w3-padding-64 w3-content" id="photos">
-    <h2 class="w3-text-light-grey">My Photos</h2>
-    <hr style="width:200px" class="w3-opacity">
-
-    <!-- Grid for photos -->
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-half">
-        <img src="/w3images/wedding.jpg" style="width:100%">
-        <img src="/w3images/rocks.jpg" style="width:100%">
-        <img src="/w3images/sailboat.jpg" style="width:100%">
-      </div>
-
-      <div class="w3-half">
-        <img src="/w3images/underwater.jpg" style="width:100%">
-        <img src="/w3images/chef.jpg" style="width:100%">
-        <img src="/w3images/wedding.jpg" style="width:100%">
-        <img src="/w3images/p6.jpg" style="width:100%">
-      </div>
-    <!-- End photo grid -->
-    </div>
-  <!-- End Portfolio Section -->
   </div>
 
-  <!-- Contact Section -->
-  <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
-    <h2 class="w3-text-light-grey">Contact Me</h2>
-    <hr style="width:200px" class="w3-opacity">
+  <!-- About -->
+  <section id="about">
+    <p class="section-label">About</p>
+    <p class="about-text">
+      I'm a <strong>Software Engineer III at Schneider Electric Hub</strong>, working on
+      backend infrastructure and ML-powered microservices. Over the years I've worked across
+      backend systems, NLP pipelines, Android apps, ad-tech, and full-stack projects.<br><br>
+      I spent 3+ years as a <strong>technical writer and editor</strong> at Stackabuse, covering
+      computer graphics, computer vision, and applied ML — which still shapes how I think about
+      documentation and engineering communication.<br><br>
+      I hold a Master's in Computer Science from the University of Belgrade and I'm currently
+      pursuing a <strong>PhD in Computer Science</strong> at the same faculty.
+    </p>
+  </section>
 
-    <div class="w3-section">
-      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Chicago, US</p>
-      <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +00 151515</p>
-      <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
-    </div><br>
-    <p>Let's get in touch. Send me a message:</p>
+  <!-- Experience -->
+  <section id="experience">
+    <p class="section-label">Experience</p>
+    <div class="exp-list">
 
-    <form action="/action_page.php" target="_blank">
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
-      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
-      <p>
-        <button class="w3-button w3-light-grey w3-padding-large" type="submit">
-          <i class="fa fa-paper-plane"></i> SEND MESSAGE
-        </button>
-      </p>
-    </form>
-  <!-- End Contact Section -->
-  </div>
-  
-    <!-- Footer -->
-  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-    <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-  <!-- End footer -->
+      <div class="exp-row">
+        <span class="exp-date">Oct 2024 –<br>present</span>
+        <div>
+          <p class="exp-role">Software Engineer III</p>
+          <p class="exp-company">Schneider Electric Hub</p>
+          <p class="exp-desc">Backend and infrastructure for ML-powered microservices. Python, AWS, CI/CD, applied machine learning.</p>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <span class="exp-date">Jun 2023 –<br>Oct 2024</span>
+        <div>
+          <p class="exp-role">Software Engineer → III</p>
+          <p class="exp-company">EnergySage (Schneider Electric)</p>
+          <p class="exp-desc">Backend engineering and applied ML in a renewable energy marketplace. Django, Python, AWS.</p>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <span class="exp-date">Jul 2022 –<br>May 2023</span>
+        <div>
+          <p class="exp-role">Software Engineer</p>
+          <p class="exp-company">Wings Software</p>
+          <p class="exp-desc">Full-stack NLP solution — personalized chatbot mimicking customer support from knowledge docs. Python, Flask, React, ChatGPT, MySQL.</p>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <span class="exp-date">May 2021 –<br>Nov 2021</span>
+        <div>
+          <p class="exp-role">Software Engineer (part-time)</p>
+          <p class="exp-company">esome advertising technologies GmbH</p>
+          <p class="exp-desc">Backend microservices for social media advertising. PHP, Symfony, Laravel, Docker.</p>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <span class="exp-date">Mar 2019 –<br>May 2022</span>
+        <div>
+          <p class="exp-role">Technical Writer & Editor</p>
+          <p class="exp-company">Unstack / Stackabuse</p>
+          <p class="exp-desc">3+ years writing and editing technical content on computer graphics, computer vision, ML, and backend dev. Python, OpenCV, OpenGL, Java.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <div class="projects-list">
+
+      <a class="project-row" href="https://github.com/Vbatocanin" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">Spider Gym</p>
+          <p class="project-desc">Django 5.2 monolith for gym membership management. Covers member registration, subscriptions, QR-based check-ins, session credits, payments, role-based access, and reporting dashboards.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Django 5.2</span>
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">QR / check-in</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+      <a class="project-row" href="https://play.google.com/store/apps/details?id=com.pingwin.mlkit.vision.app" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">A-Scan</p>
+          <p class="project-desc">Android CV app for scanning and verifying state-issued fiscal QR codes, with a registration system.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Java</span>
+            <span class="tech-pill">Kotlin</span>
+            <span class="tech-pill">Android ML Kit</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+      <a class="project-row" href="https://github.com/Vbatocanin/masinsko-ucenje-projekat-2022" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">Contextualized Word Embeddings</p>
+          <p class="project-desc">NLP ML application for syntax analysis of the Serbian language using Flair embeddings.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Flair</span>
+            <span class="tech-pill">NLP</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+      <a class="project-row" href="https://github.com/Vbatocanin/calwag" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">Automated Payment Calculator</p>
+          <p class="project-desc">Automatic wage calculation from work time logged on Google Calendar. YAML-formalized wage rules.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Google API</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">Selenium</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+      <a class="project-row" href="https://github.com/MATF-RS20/RS015-ipds-iterated-prisoners-dilemma-simulation" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">Game Theory Simulator</p>
+          <p class="project-desc">Iterated prisoner's dilemma simulation implementing core game theory principles with real-time visualization.</p>
+          <div class="project-tech">
+            <span class="tech-pill">C++</span>
+            <span class="tech-pill">Qt</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+      <a class="project-row" href="https://github.com/Vbatocanin/genetic_maze_generator" target="_blank" rel="noopener">
+        <div>
+          <p class="project-name">Genetic Maze Generator</p>
+          <p class="project-desc">Generates progressively harder mazes using a genetic algorithm, with animated visualization.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Genetic Algorithms</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section id="stack">
+    <p class="section-label">Stack</p>
+    <div class="stack-grid">
+      <div class="stack-item"><span class="stack-name">Python</span>Primary language</div>
+      <div class="stack-item"><span class="stack-name">Django / DRF</span>Backend & APIs</div>
+      <div class="stack-item"><span class="stack-name">Machine Learning</span>Applied ML & NLP</div>
+      <div class="stack-item"><span class="stack-name">Computer Vision</span>OpenCV, ML Kit</div>
+      <div class="stack-item"><span class="stack-name">AWS</span>Cloud infrastructure</div>
+      <div class="stack-item"><span class="stack-name">Docker</span>Containers</div>
+      <div class="stack-item"><span class="stack-name">PostgreSQL / MySQL</span>Databases</div>
+      <div class="stack-item"><span class="stack-name">iOS / Swift</span>Mobile</div>
+      <div class="stack-item"><span class="stack-name">React</span>Frontend</div>
+      <div class="stack-item"><span class="stack-name">C++ / Qt</span>Systems & GUI</div>
+      <div class="stack-item"><span class="stack-name">PHP / Symfony</span>Legacy backend</div>
+      <div class="stack-item"><span class="stack-name">CI/CD</span>GitHub Actions</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-links">
+
+      <a class="contact-link" href="https://github.com/Vbatocanin" target="_blank" rel="noopener">
+        github.com/Vbatocanin
+        <span class="link-label">GitHub</span>
+      </a>
+
+      <a class="contact-link" href="https://linkedin.com/in/vladimir-batocanin" target="_blank" rel="noopener">
+        linkedin.com/in/vladimir-batocanin
+        <span class="link-label">LinkedIn</span>
+      </a>
+
+      <a class="contact-link" href="https://stackabuse.com/author/vladimir-batocanin/" target="_blank" rel="noopener">
+        stackabuse.com/author/vladimir-batocanin
+        <span class="link-label">Writing</span>
+      </a>
+
+      <a class="contact-link" href="mailto:vlad.batocanin@gmail.com">
+        vlad.batocanin@gmail.com
+        <span class="link-label">Email</span>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Vladimir Batoćanin</span>
+    <span id="year"></span>
   </footer>
 
-<!-- END PAGE CONTENT -->
 </div>
-
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
