@@ -3,27 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vladimir Batoćanin</title>
+  <title>Vladimir Batocanin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #F7F5F0;
-      --bg-card: #F0EDE6;
-      --text: #1A1A18;
-      --muted: #6B6A65;
-      --accent: #B85C38;
-      --border: rgba(26, 26, 24, 0.12);
-      --font-display: 'Playfair Display', Georgia, serif;
+      --bg: #1A1A18;
+      --bg-card: #222220;
+      --text: #F0EDE6;
+      --muted: #8A8880;
+      --accent: #8B6FE8;
+      --border: rgba(240, 237, 230, 0.1);
+      --font-display: 'Nunito', sans-serif;
       --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -32,10 +29,8 @@
       line-height: 1.7;
       min-height: 100vh;
     }
-
     .container { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
 
-    /* ── Nav ── */
     nav {
       padding: 2.5rem 0 1.25rem;
       display: flex;
@@ -45,258 +40,62 @@
       opacity: 0;
       animation: fadein 0.6s ease 0.1s forwards;
     }
-
-    .nav-logo {
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
+    .nav-logo { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
-
-    .nav-links a {
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .nav-links a { font-size: 12px; letter-spacing: 0.06em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── Hero ── */
-    .hero {
-      padding: 7rem 0 5rem;
-      opacity: 0;
-      animation: fadein 0.8s ease 0.25s forwards;
-    }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 400;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 9vw, 5.2rem);
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-desc {
-      font-size: 14px;
-      color: var(--muted);
-      max-width: 500px;
-      line-height: 1.85;
-      font-weight: 300;
-    }
-
+    .hero { padding: 7rem 0 5rem; opacity: 0; animation: fadein 0.8s ease 0.25s forwards; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 400; margin-bottom: 1.25rem; }
+    .hero-name { font-family: var(--font-display); font-size: clamp(3.4rem, 10vw, 6.2rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 1.75rem; }
+    .hero-desc { font-size: 14px; color: var(--muted); max-width: 500px; line-height: 1.85; font-weight: 300; }
     .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-
-    .tag {
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
+    .tag { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; transition: border-color 0.2s, color 0.2s; }
     .tag:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── Sections ── */
-    section {
-      padding: 4rem 0;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-    }
-
+    section { padding: 4rem 0; border-top: 1px solid var(--border); }
+    section.animate { opacity: 0; }
     section.visible { animation: fadein 0.7s ease forwards; }
 
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
+    .section-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; font-weight: 400; }
 
-    /* ── About ── */
-    .about-text {
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.9;
-      font-weight: 300;
-      max-width: 560px;
-    }
-
+    .about-text { font-size: 15px; color: var(--text); line-height: 1.9; font-weight: 300; max-width: 560px; }
     .about-text strong { font-weight: 500; }
 
-    /* ── Experience ── */
     .exp-list { display: flex; flex-direction: column; }
-
-    .exp-row {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .exp-row { display: grid; grid-template-columns: 130px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
     .exp-row:first-child { border-top: 1px solid var(--border); }
-
-    .exp-date {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 300;
-      padding-top: 3px;
-      letter-spacing: 0.03em;
-      line-height: 1.6;
-    }
-
-    .exp-role { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .exp-date { font-size: 11px; color: var(--muted); font-weight: 300; padding-top: 3px; letter-spacing: 0.03em; line-height: 1.6; }
+    .exp-role { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
     .exp-company { font-size: 12px; color: var(--accent); margin-bottom: 6px; font-weight: 400; }
     .exp-desc { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.7; }
 
-    /* ── Projects ── */
     .projects-list { display: flex; flex-direction: column; }
-
-    .project-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: inherit;
-      align-items: start;
-      transition: background 0.15s;
-    }
-
+    .project-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; align-items: start; }
     .project-row:first-child { border-top: 1px solid var(--border); }
-
-    .project-name {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 400;
-      margin-bottom: 4px;
-      transition: color 0.2s;
-    }
-
+    .project-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; transition: color 0.2s; }
     .project-row:hover .project-name { color: var(--accent); }
-
-    .project-desc {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 300;
-      line-height: 1.65;
-      margin-bottom: 8px;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tech-pill {
-      font-size: 10px;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-    }
-
-    .project-arrow {
-      font-size: 12px;
-      color: var(--border);
-      padding-top: 4px;
-      flex-shrink: 0;
-      transition: color 0.2s, transform 0.2s;
-    }
-
+    .project-desc { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.65; margin-bottom: 8px; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tech-pill { font-size: 10px; letter-spacing: 0.05em; color: var(--muted); border: 1px solid var(--border); padding: 2px 8px; }
+    .project-arrow { font-size: 12px; color: var(--muted); padding-top: 4px; flex-shrink: 0; transition: color 0.2s, transform 0.2s; }
     .project-row:hover .project-arrow { color: var(--accent); transform: translateX(3px); }
 
-    /* ── Stack ── */
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .stack-item {
-      background: var(--bg);
-      padding: 1rem 1.25rem;
-      font-size: 12px;
-      color: var(--muted);
-      transition: background 0.2s, color 0.2s;
-    }
-
+    .stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .stack-item { background: var(--bg); padding: 1rem 1.25rem; font-size: 12px; color: var(--muted); transition: background 0.2s, color 0.2s; }
     .stack-item:hover { background: var(--bg-card); color: var(--text); }
+    .stack-item .stack-name { font-weight: 500; color: var(--text); display: block; margin-bottom: 2px; }
 
-    .stack-item .stack-name {
-      font-weight: 500;
-      color: var(--text);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* ── Contact ── */
     .contact-links { display: flex; flex-direction: column; }
-
-    .contact-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 13px;
-      transition: color 0.2s;
-    }
-
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--muted); font-size: 13px; transition: color 0.2s; }
     .contact-link:first-child { border-top: 1px solid var(--border); }
     .contact-link:hover { color: var(--accent); }
-
-    .contact-link .link-label {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--border);
-      font-weight: 300;
-    }
-
+    .contact-link .link-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--border); font-weight: 300; }
     .contact-link:hover .link-label { color: var(--accent); opacity: 0.5; }
 
-    /* ── Footer ── */
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      opacity: 0;
-      animation: fadein 0.6s ease 1s forwards;
-    }
+    footer { padding: 3rem 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; opacity: 0; animation: fadein 0.6s ease 1s forwards; }
 
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 560px) {
       .exp-row { grid-template-columns: 1fr; gap: 0.25rem; }
@@ -321,8 +120,8 @@
   </nav>
 
   <div class="hero">
-    <p class="hero-eyebrow">Software Engineer · Belgrade</p>
-    <h1 class="hero-name">Vladimir<br>Batoćanin</h1>
+    <p class="hero-eyebrow">Software Engineer &middot; Belgrade</p>
+    <h1 class="hero-name">Vladimir<br>Bato&#263;anin</h1>
     <p class="hero-desc">
       Backend-focused software engineer building production systems at Schneider Electric.
       Doctoral researcher in Computer Science at the University of Belgrade.
@@ -340,7 +139,6 @@
     </div>
   </div>
 
-  <!-- About -->
   <section id="about">
     <p class="section-label">About</p>
     <p class="about-text">
@@ -348,67 +146,58 @@
       backend infrastructure and ML-powered microservices. Over the years I've worked across
       backend systems, NLP pipelines, Android apps, ad-tech, and full-stack projects.<br><br>
       I spent 3+ years as a <strong>technical writer and editor</strong> at Stackabuse, covering
-      computer graphics, computer vision, and applied ML — which still shapes how I think about
-      documentation and engineering communication.<br><br>
-      I hold a Master's in Computer Science from the University of Belgrade and I'm currently
-      pursuing a <strong>PhD in Computer Science</strong> at the same faculty.
+      computer graphics, computer vision, and applied ML.<br><br>
+      Master's in Computer Science from the University of Belgrade. Currently pursuing a
+      <strong>PhD in Computer Science</strong> at the same faculty.
     </p>
   </section>
 
-  <!-- Experience -->
   <section id="experience">
     <p class="section-label">Experience</p>
     <div class="exp-list">
-
       <div class="exp-row">
-        <span class="exp-date">Oct 2024 –<br>present</span>
+        <span class="exp-date">Oct 2024 &ndash; present</span>
         <div>
           <p class="exp-role">Software Engineer III</p>
           <p class="exp-company">Schneider Electric Hub</p>
           <p class="exp-desc">Backend and infrastructure for ML-powered microservices. Python, AWS, CI/CD, applied machine learning.</p>
         </div>
       </div>
-
       <div class="exp-row">
-        <span class="exp-date">Jun 2023 –<br>Oct 2024</span>
+        <span class="exp-date">Jun 2023 &ndash; Oct 2024</span>
         <div>
-          <p class="exp-role">Software Engineer → III</p>
+          <p class="exp-role">Software Engineer &rarr; III</p>
           <p class="exp-company">EnergySage (Schneider Electric)</p>
           <p class="exp-desc">Backend engineering and applied ML in a renewable energy marketplace. Django, Python, AWS.</p>
         </div>
       </div>
-
       <div class="exp-row">
-        <span class="exp-date">Jul 2022 –<br>May 2023</span>
+        <span class="exp-date">Jul 2022 &ndash; May 2023</span>
         <div>
           <p class="exp-role">Software Engineer</p>
           <p class="exp-company">Wings Software</p>
-          <p class="exp-desc">Full-stack NLP solution — personalized chatbot mimicking customer support from knowledge docs. Python, Flask, React, ChatGPT, MySQL.</p>
+          <p class="exp-desc">Full-stack NLP solution &mdash; personalized chatbot mimicking customer support from knowledge docs. Python, Flask, React, ChatGPT, MySQL.</p>
         </div>
       </div>
-
       <div class="exp-row">
-        <span class="exp-date">May 2021 –<br>Nov 2021</span>
+        <span class="exp-date">May 2021 &ndash; Nov 2021</span>
         <div>
           <p class="exp-role">Software Engineer (part-time)</p>
           <p class="exp-company">esome advertising technologies GmbH</p>
           <p class="exp-desc">Backend microservices for social media advertising. PHP, Symfony, Laravel, Docker.</p>
         </div>
       </div>
-
       <div class="exp-row">
-        <span class="exp-date">Mar 2019 –<br>May 2022</span>
+        <span class="exp-date">Mar 2019 &ndash; May 2022</span>
         <div>
-          <p class="exp-role">Technical Writer & Editor</p>
+          <p class="exp-role">Technical Writer &amp; Editor</p>
           <p class="exp-company">Unstack / Stackabuse</p>
-          <p class="exp-desc">3+ years writing and editing technical content on computer graphics, computer vision, ML, and backend dev. Python, OpenCV, OpenGL, Java.</p>
+          <p class="exp-desc">3+ years writing and editing technical content on computer graphics, computer vision, ML, and backend dev.</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- Projects -->
   <section id="projects">
     <p class="section-label">Projects</p>
     <div class="projects-list">
@@ -416,7 +205,7 @@
       <a class="project-row" href="https://github.com/Vbatocanin" target="_blank" rel="noopener">
         <div>
           <p class="project-name">Spider Gym</p>
-          <p class="project-desc">Django 5.2 monolith for gym membership management. Covers member registration, subscriptions, QR-based check-ins, session credits, payments, role-based access, and reporting dashboards.</p>
+          <p class="project-desc">Django 5.2 monolith for gym membership management. Member registration, subscriptions, QR-based check-ins, session credits, payments, role-based access, and reporting dashboards.</p>
           <div class="project-tech">
             <span class="tech-pill">Django 5.2</span>
             <span class="tech-pill">Python</span>
@@ -425,7 +214,7 @@
             <span class="tech-pill">QR / check-in</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
       <a class="project-row" href="https://play.google.com/store/apps/details?id=com.pingwin.mlkit.vision.app" target="_blank" rel="noopener">
@@ -438,7 +227,7 @@
             <span class="tech-pill">Android ML Kit</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
       <a class="project-row" href="https://github.com/Vbatocanin/masinsko-ucenje-projekat-2022" target="_blank" rel="noopener">
@@ -451,7 +240,7 @@
             <span class="tech-pill">NLP</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
       <a class="project-row" href="https://github.com/Vbatocanin/calwag" target="_blank" rel="noopener">
@@ -465,7 +254,7 @@
             <span class="tech-pill">Selenium</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
       <a class="project-row" href="https://github.com/MATF-RS20/RS015-ipds-iterated-prisoners-dilemma-simulation" target="_blank" rel="noopener">
@@ -477,7 +266,7 @@
             <span class="tech-pill">Qt</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
       <a class="project-row" href="https://github.com/Vbatocanin/genetic_maze_generator" target="_blank" rel="noopener">
@@ -489,73 +278,73 @@
             <span class="tech-pill">Genetic Algorithms</span>
           </div>
         </div>
-        <span class="project-arrow">→</span>
+        <span class="project-arrow">&rarr;</span>
       </a>
 
     </div>
   </section>
 
-  <!-- Stack -->
   <section id="stack">
     <p class="section-label">Stack</p>
     <div class="stack-grid">
       <div class="stack-item"><span class="stack-name">Python</span>Primary language</div>
-      <div class="stack-item"><span class="stack-name">Django / DRF</span>Backend & APIs</div>
-      <div class="stack-item"><span class="stack-name">Machine Learning</span>Applied ML & NLP</div>
+      <div class="stack-item"><span class="stack-name">Django / DRF</span>Backend &amp; APIs</div>
+      <div class="stack-item"><span class="stack-name">Machine Learning</span>Applied ML &amp; NLP</div>
       <div class="stack-item"><span class="stack-name">Computer Vision</span>OpenCV, ML Kit</div>
       <div class="stack-item"><span class="stack-name">AWS</span>Cloud infrastructure</div>
       <div class="stack-item"><span class="stack-name">Docker</span>Containers</div>
       <div class="stack-item"><span class="stack-name">PostgreSQL / MySQL</span>Databases</div>
       <div class="stack-item"><span class="stack-name">iOS / Swift</span>Mobile</div>
       <div class="stack-item"><span class="stack-name">React</span>Frontend</div>
-      <div class="stack-item"><span class="stack-name">C++ / Qt</span>Systems & GUI</div>
+      <div class="stack-item"><span class="stack-name">C++ / Qt</span>Systems &amp; GUI</div>
       <div class="stack-item"><span class="stack-name">PHP / Symfony</span>Legacy backend</div>
       <div class="stack-item"><span class="stack-name">CI/CD</span>GitHub Actions</div>
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <p class="section-label">Contact</p>
     <div class="contact-links">
-
       <a class="contact-link" href="https://github.com/Vbatocanin" target="_blank" rel="noopener">
         github.com/Vbatocanin
         <span class="link-label">GitHub</span>
       </a>
-
       <a class="contact-link" href="https://linkedin.com/in/vladimir-batocanin" target="_blank" rel="noopener">
         linkedin.com/in/vladimir-batocanin
         <span class="link-label">LinkedIn</span>
       </a>
-
       <a class="contact-link" href="https://stackabuse.com/author/vladimir-batocanin/" target="_blank" rel="noopener">
         stackabuse.com/author/vladimir-batocanin
         <span class="link-label">Writing</span>
       </a>
-
       <a class="contact-link" href="mailto:vlad.batocanin@gmail.com">
         vlad.batocanin@gmail.com
         <span class="link-label">Email</span>
       </a>
-
     </div>
   </section>
 
   <footer>
-    <span>Vladimir Batoćanin</span>
+    <span>Vladimir Bato&#263;anin</span>
     <span id="year"></span>
   </footer>
 
 </div>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  var sections = document.querySelectorAll('section');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('section').forEach(s => obs.observe(s));
+  }, { threshold: 0.05 });
+  sections.forEach(function(s) {
+    s.classList.add('animate');
+    obs.observe(s);
+  });
 </script>
 </body>
 </html>
