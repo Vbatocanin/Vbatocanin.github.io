@@ -60,9 +60,18 @@
     .track-sun {
       position: absolute; top: 50%; right: 8px;
       transform: translateY(-50%);
-      width: 11px; height: 11px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 3.5px var(--accent);
+      box-shadow:
+        0 0 0 1.5px var(--bg-card), 0 0 0 2.5px var(--accent),
+        0 -5px 0 -1.5px var(--accent),
+        0  5px 0 -1.5px var(--accent),
+        -5px 0 0 -1.5px var(--accent),
+         5px 0 0 -1.5px var(--accent),
+        -3.5px -3.5px 0 -1.5px var(--accent),
+         3.5px -3.5px 0 -1.5px var(--accent),
+        -3.5px  3.5px 0 -1.5px var(--accent),
+         3.5px  3.5px 0 -1.5px var(--accent);
       opacity: 0.35; transition: opacity 0.35s;
     }
     /* active side is bright */
@@ -93,18 +102,57 @@
     .blackout-text .caret { display: inline-block; width: 8px; height: 13px; background: #fff; vertical-align: text-bottom; animation: caret-blink 0.7s step-end infinite; margin-left: 2px; }
     @keyframes caret-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     /* candle on blackout screen */
-    .candle-wrap { display: flex; flex-direction: column; align-items: center; }
-    .candle-flame { position: relative; width: 10px; height: 18px; margin: 0 auto 2px; }
-    .flame-inner { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 7px; height: 14px; background: rgba(255,200,80,0.95); border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%; animation: flicker 1.1s ease-in-out infinite; transform-origin: bottom center; }
-    .flame-outer { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 10px; height: 18px; background: rgba(255,120,20,0.45); border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%; animation: flicker-outer 1.1s ease-in-out infinite 0.15s; transform-origin: bottom center; filter: blur(1px); }
-    .flame-glow { position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 22px; height: 22px; background: radial-gradient(circle, rgba(255,180,50,0.35) 0%, transparent 70%); border-radius: 50%; animation: glow-pulse 1.1s ease-in-out infinite; }
-    @keyframes flicker { 0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-2deg); } 33% { transform: translateX(-50%) scaleX(0.88) scaleY(1.06) rotate(2deg); } 66% { transform: translateX(-50%) scaleX(1.05) scaleY(0.95) rotate(-1deg); } }
-    @keyframes flicker-outer { 0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(1deg); } 50% { transform: translateX(-50%) scaleX(0.9) scaleY(1.08) rotate(-2deg); } }
-    @keyframes glow-pulse { 0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.15); } }
-    .candle-body { width: 14px; height: 38px; background: linear-gradient(90deg, #ddd 0%, #fff 40%, #bbb 100%); border-radius: 2px 2px 3px 3px; position: relative; }
-    .candle-wax { position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 14px; height: 5px; background: rgba(255,200,100,0.5); border-radius: 50%; }
-    .candle-wick { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 1.5px; height: 6px; background: #555; border-radius: 1px; }
-    .candle-base { width: 18px; height: 5px; background: #aaa; border-radius: 1px; margin: 0 auto; }
+    .candle-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
+    .candle-wrap::before { content: ""; position: absolute; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,150,30,0.15) 0%, transparent 70%); top: -22px; left: 50%; transform: translateX(-50%); border-radius: 50%; animation: ambient-pulse 2.2s ease-in-out infinite; pointer-events: none; }
+    @keyframes ambient-pulse { 0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.35); } }
+
+    .candle-flame { position: relative; width: 14px; height: 26px; margin: 0 auto 0; animation: flame-sway 3.5s ease-in-out infinite; transform-origin: bottom center; transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1); }
+    @keyframes flame-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+
+    /* hover: flame surges */
+    .torch-btn:hover .candle-flame { transform: scaleX(1.2) scaleY(1.35) !important; }
+    .torch-btn:hover .flame-inner { background: linear-gradient(to top, rgba(255,180,0,1) 0%, rgba(255,240,80,1) 55%, rgba(255,255,200,0.95) 100%); filter: blur(0.2px); }
+    .torch-btn:hover .flame-outer { transform: translateX(-50%) scaleX(1.15) scaleY(1.2); filter: blur(3px); opacity: 1; background: linear-gradient(to top, rgba(220,60,0,0.75) 0%, rgba(255,120,0,0.55) 45%, rgba(255,200,60,0.2) 100%); }
+    .torch-btn:hover .flame-core { transform: translateX(-50%) scaleY(1.3); background: rgba(255,255,245,1); }
+    .torch-btn:hover .flame-glow { width: 52px; height: 52px; background: radial-gradient(circle, rgba(255,160,30,0.65) 0%, transparent 70%); }
+    .torch-btn:hover .candle-wrap::before { transform: translateX(-50%) scale(1.7); opacity: 1; background: radial-gradient(circle, rgba(255,140,20,0.28) 0%, transparent 70%); }
+    .torch-btn:hover .candle-wick::after { box-shadow: 0 0 8px 3px rgba(255,160,30,1); }
+
+    .flame-inner { transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
+    .flame-outer { transition: all 1.1s cubic-bezier(0.4, 0, 0.2, 1); }
+    .flame-core { transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+    .flame-glow { transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .candle-wick::after { transition: box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .candle-wrap::before { transition: transform 1.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.1s ease; }
+
+    .flame-glow { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: radial-gradient(circle, rgba(255,140,20,0.45) 0%, transparent 70%); border-radius: 50%; animation: glow-pulse 1.2s ease-in-out infinite; z-index: 0; }
+    .flame-outer { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 14px; height: 26px; background: linear-gradient(to top, rgba(200,50,0,0.55) 0%, rgba(255,90,0,0.35) 45%, rgba(255,180,40,0.1) 100%); border-radius: 50% 50% 28% 28% / 60% 60% 40% 40%; animation: flicker-outer 1.4s ease-in-out infinite 0.1s; transform-origin: bottom center; filter: blur(2.5px); z-index: 1; }
+    .flame-inner { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 19px; background: linear-gradient(to top, rgba(255,130,0,0.95) 0%, rgba(255,215,50,0.95) 55%, rgba(255,255,160,0.85) 100%); border-radius: 50% 50% 25% 25% / 60% 60% 40% 40%; animation: flicker 1.1s ease-in-out infinite; transform-origin: bottom center; filter: blur(0.4px); z-index: 2; }
+    .flame-core { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 3px; height: 8px; background: rgba(255,255,230,0.98); border-radius: 50% 50% 30% 30% / 70% 70% 30% 30%; animation: core-flicker 0.85s ease-in-out infinite; transform-origin: bottom center; z-index: 3; }
+
+    @keyframes flicker { 0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); } 30% { transform: translateX(-50%) scaleX(0.85) scaleY(1.07) rotate(2deg); } 65% { transform: translateX(-50%) scaleX(1.08) scaleY(0.93) rotate(-2deg); } }
+    @keyframes flicker-outer { 0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(1deg); } 45% { transform: translateX(-50%) scaleX(0.88) scaleY(1.1) rotate(-3deg); } }
+    @keyframes glow-pulse { 0%, 100% { opacity: 0.75; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.2); } }
+    @keyframes core-flicker { 0%, 100% { transform: translateX(-50%) scaleY(1); opacity: 0.9; } 50% { transform: translateX(-50%) scaleY(1.15); opacity: 1; } }
+
+    /* smoke wisps */
+    .candle-smoke { position: absolute; top: -4px; left: 50%; }
+    .smoke-wisp { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: rgba(210,210,210,0.35); filter: blur(2px); animation: smoke-rise 3s ease-out infinite; }
+    .smoke-wisp:nth-child(1) { left: -1px; animation-delay: 0s; }
+    .smoke-wisp:nth-child(2) { left: 2px; width: 3px; height: 3px; animation-delay: 1s; }
+    .smoke-wisp:nth-child(3) { left: -3px; width: 5px; height: 5px; animation-delay: 2s; }
+    @keyframes smoke-rise { 0% { transform: translateY(0) translateX(0) scale(0.4); opacity: 0; } 15% { opacity: 0.45; } 60% { transform: translateY(-22px) translateX(5px) scale(1.6); opacity: 0.2; } 100% { transform: translateY(-44px) translateX(-5px) scale(2.5); opacity: 0; } }
+
+    .candle-body { width: 16px; height: 42px; background: linear-gradient(90deg, #ccc 0%, #f8f8f8 45%, #bbb 100%); border-radius: 2px 2px 3px 3px; position: relative; overflow: visible; }
+    .candle-wax { position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 16px; height: 6px; background: rgba(255,210,110,0.55); border-radius: 50%; }
+    .candle-wick { position: absolute; top: -9px; left: 50%; transform: translateX(-50%) rotate(3deg); width: 1.5px; height: 9px; background: linear-gradient(to top, #222, #555); border-radius: 1px; }
+    .candle-wick::after { content: ""; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; border-radius: 50%; background: rgba(255,80,0,0.95); box-shadow: 0 0 4px 1px rgba(255,140,20,0.8); animation: ember-pulse 0.9s ease-in-out infinite; }
+    @keyframes ember-pulse { 0%, 100% { opacity: 0.85; box-shadow: 0 0 3px 1px rgba(255,140,20,0.7); } 50% { opacity: 1; box-shadow: 0 0 6px 2px rgba(255,160,30,1); } }
+    .candle-drip { position: absolute; top: 2px; left: 2px; width: 4px; background: rgba(245,235,200,0.9); border-radius: 0 0 3px 3px; height: 0; animation: drip-grow 7s ease-in-out infinite 1s; }
+    .candle-drip::after { content: ""; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 4px; height: 0; background: rgba(245,235,200,0.9); border-radius: 0 0 50% 50%; animation: drip-tip 7s ease-in-out infinite 1s; }
+    @keyframes drip-grow { 0%, 20% { height: 0; } 65%, 85% { height: 14px; } 95%, 100% { height: 0; } }
+    @keyframes drip-tip { 0%, 20% { height: 0; opacity: 0; } 65%, 85% { height: 7px; opacity: 1; } 95%, 100% { height: 0; opacity: 0; } }
+    .candle-base { width: 20px; height: 6px; background: linear-gradient(90deg, #888 0%, #bbb 50%, #888 100%); border-radius: 2px; margin: 0 auto; }
     /* flashlight button */
     .torch-btn { display: none; flex-direction: column; align-items: center; gap: 8px; background: none; border: none; cursor: none; opacity: 0; transition: opacity 0.6s; }
     .torch-btn.visible { display: flex; opacity: 1; }
@@ -253,13 +301,18 @@
     .wifi span:nth-child(4) { height: 18px; animation-delay: 0.6s; }
     @keyframes signal { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
 
-    /* deploy dots - fixed width, no size change */
-    .deploy { display: flex; align-items: center; gap: 5px; }
-    .deploy-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; opacity: 0.2; animation: deploy-pulse 1.5s ease-in-out infinite; }
-    .deploy-dot:nth-child(1) { animation-delay: 0s; }
-    .deploy-dot:nth-child(2) { animation-delay: 0.25s; }
-    .deploy-dot:nth-child(3) { animation-delay: 0.5s; }
-    @keyframes deploy-pulse { 0%, 100% { opacity: 0.2; transform: scale(1); } 40% { opacity: 1; transform: scale(1.3); } }
+    /* deploy pipeline */
+    .deploy { display: flex; align-items: center; gap: 0; }
+    .deploy-node { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.18; }
+    .deploy-pipe { width: 12px; height: 1.5px; background: var(--accent); opacity: 0.12; position: relative; overflow: hidden; }
+    .deploy-pipe::after { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); animation: pipe-travel 2.4s ease-in-out infinite; }
+    .deploy-node:nth-child(1) { animation: node-light 2.4s ease-in-out infinite 0s; }
+    .deploy-pipe:nth-child(2)::after { animation-delay: 0.3s; }
+    .deploy-node:nth-child(3) { animation: node-light 2.4s ease-in-out infinite 0.7s; }
+    .deploy-pipe:nth-child(4)::after { animation-delay: 1s; }
+    .deploy-node:nth-child(5) { animation: node-light 2.4s ease-in-out infinite 1.4s; }
+    @keyframes node-light { 0%, 85%, 100% { opacity: 0.18; box-shadow: none; } 30%, 55% { opacity: 1; box-shadow: 0 0 6px 1px var(--accent); } }
+    @keyframes pipe-travel { 0%, 15% { left: -100%; opacity: 0; } 20% { opacity: 1; } 60%, 100% { left: 100%; opacity: 0; } }
 
     section { padding: 5rem 0; border-top: 1px solid var(--border); }
     section.animate { opacity: 0; }
@@ -553,12 +606,30 @@
       100% { transform: translateY(-110vh) rotate(780deg); opacity: 0; }
     }
 
-    /* ── terminal ── */
+    /* ── terminal popup ── */
     #terminal-wrap {
-      margin-top: 1.5rem; padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      max-width: 780px; margin-left: auto; margin-right: auto;
+      display: none; position: fixed; inset: 0; z-index: 8000;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
     }
+    #terminal-wrap.open { display: flex; animation: fadein 0.25s ease forwards; }
+    #terminal-box {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; width: min(600px, 90vw);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    #terminal-titlebar {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    #terminal-titlebar span { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 6px; opacity: 0.6; }
+    .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dot.close { background: #ff5f57; cursor: pointer; }
+    .term-dot.min { background: #febc2e; }
+    .term-dot.max { background: #28c840; }
+    #terminal-body { padding: 14px 16px; }
     #terminal-form { display: flex; align-items: center; gap: 8px; }
     #terminal-prompt { font-size: 12px; color: var(--accent); font-family: var(--font-mono); opacity: 0.7; }
     #terminal-input {
@@ -568,8 +639,8 @@
     }
     #terminal-output {
       font-family: var(--font-mono); font-size: 11px; color: var(--muted);
-      margin-top: 6px; line-height: 1.7; white-space: pre-wrap;
-      min-height: 1.4em;
+      margin-top: 10px; line-height: 1.7; white-space: pre-wrap;
+      min-height: 1.4em; max-height: 240px; overflow-y: auto;
     }
 
     /* ── rage popup ── */
@@ -658,14 +729,21 @@
   <div class="blackout-text" id="blackout-text"></div>
   <button class="torch-btn" id="torch-btn" onclick="lightOn()">
     <div class="candle-wrap">
+      <div class="candle-smoke">
+        <div class="smoke-wisp"></div>
+        <div class="smoke-wisp"></div>
+        <div class="smoke-wisp"></div>
+      </div>
       <div class="candle-flame">
         <div class="flame-glow"></div>
         <div class="flame-outer"></div>
         <div class="flame-inner"></div>
+        <div class="flame-core"></div>
       </div>
       <div class="candle-body">
         <div class="candle-wax"></div>
         <div class="candle-wick"></div>
+        <div class="candle-drip"></div>
       </div>
       <div class="candle-base"></div>
     </div>
@@ -738,7 +816,7 @@
         <span class="deco-label">always online</span>
       </div>
       <div class="deco-item">
-        <div class="deploy"><div class="deploy-dot"></div><div class="deploy-dot"></div><div class="deploy-dot"></div></div>
+        <div class="deploy"><div class="deploy-node"></div><div class="deploy-pipe"></div><div class="deploy-node"></div><div class="deploy-pipe"></div><div class="deploy-node"></div></div>
         <span class="deco-label">deploying</span>
       </div>
     </div>
@@ -747,7 +825,7 @@
   <section id="about">
     <div class="section-header"><p class="section-label">About</p></div>
     <p class="about-text">
-      I am a <strong>Software Engineer III at Schneider Electric Hub</strong>, working on
+      I am a <strong>Software Engineer at Schneider Electric Hub</strong>, working on
       backend infrastructure and ML-powered microservices. Over the years I have worked across
       backend systems, NLP pipelines, Android apps, ad-tech, and full-stack projects.<br><br>
       I spent 3+ years as a <strong>technical writer and editor</strong> at Stackabuse, covering
@@ -1068,11 +1146,21 @@
     <span id="year"></span>
   </footer>
   <div id="terminal-wrap">
-    <div id="terminal-form">
-      <span id="terminal-prompt">~/vbatocanin $</span>
-      <input id="terminal-input" type="text" placeholder="type a command..." autocomplete="off" spellcheck="false"/>
+    <div id="terminal-box">
+      <div id="terminal-titlebar">
+        <div class="term-dot close" id="terminal-close"></div>
+        <div class="term-dot min"></div>
+        <div class="term-dot max"></div>
+        <span>~/vbatocanin</span>
+      </div>
+      <div id="terminal-body">
+        <div id="terminal-form">
+          <span id="terminal-prompt">~/vbatocanin $</span>
+          <input id="terminal-input" type="text" placeholder="type a command..." autocomplete="off" spellcheck="false"/>
+        </div>
+        <div id="terminal-output"></div>
+      </div>
     </div>
-    <div id="terminal-output"></div>
   </div>
 
   <!-- rage msg -->
@@ -1151,6 +1239,34 @@
       var eyebrow = document.querySelector(".hero-eyebrow");
       if (eyebrow) { eyebrow.textContent = greetings[from]; }
     }
+  })();
+
+  // ── Type "bash" anywhere to reveal terminal ──
+  (function() {
+    var typed = "";
+    document.addEventListener("keypress", function(e) {
+      if (document.activeElement.tagName === "INPUT") return;
+      typed += e.key.toLowerCase();
+      if (typed.length > 4) typed = typed.slice(-4);
+      if (typed === "bash") {
+        var wrap = document.getElementById("terminal-wrap");
+        if (!wrap.classList.contains("open")) {
+          wrap.classList.add("open");
+          setTimeout(function() { document.getElementById("terminal-input").focus(); }, 200);
+        }
+        typed = "";
+      }
+    });
+    function closeTerminal() {
+      document.getElementById("terminal-wrap").classList.remove("open");
+    }
+    document.getElementById("terminal-close").addEventListener("click", closeTerminal);
+    document.getElementById("terminal-wrap").addEventListener("click", function(e) {
+      if (e.target === this) closeTerminal();
+    });
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeTerminal();
+    });
   })();
 
   // ── Konami code → duck explosion ──
@@ -1682,15 +1798,20 @@
       "\x1b commit 3c8e5b0  docs: update CV (again)",
     ].join("\n");
     var commands = {
-      "help": "available commands:\n  help         show this\n  ls           list files\n  git log      commit history\n  whoami       who dis\n  sudo hire vladimir   make the smart choice\n  cat duck.txt         important document\n  rm -rf /             nice try",
+      "help": "available commands:\n  help         show this\n  ls           list files\n  git log      commit history\n  whoami       who dis\n  sudo hire vladimir   make the smart choice\n  cat duck.txt         important document\n  cd secrets/          (you won't get far)\n  rm -rf /             nice try",
       "ls": "index.html  favicon.svg  README.md  duck.txt  secrets/ (permission denied)",
       "whoami": "vladimir batocanin — software engineer, phd candidate, duck enthusiast",
       "git log": gitLog,
       "cat duck.txt": "🦆🦆🦆🦆🦆🦆🦆🦆\n\nit is known.",
       "sudo hire vladimir": "\n[sudo] password for recruiter: \n\nAccess granted. \nRedirecting you to vlad.batocanin@gmail.com...\n\nSmart move.",
       "rm -rf /": "nice try. also your OS called, it said no.",
+      "cd secrets/": "passwd: Authentication failure\nAuthentication failure\nAuthentication failure\n\nbash: cd: secrets/: nice try though\n\n(the duck knows what's in there. the duck isn't talking.)",
+      "cat secrets/": "bash: cat: secrets/: Is a directory. a very private one.",
+      "ls secrets/": "ls: cannot access 'secrets/': you're not ready.",
+      "cd secrets": "passwd: Authentication failure\nAuthentication failure\nAuthentication failure\n\nbash: cd: secrets/: nice try though\n\n(the duck knows what's in there. the duck isn't talking.)",
       "pwd": "/home/vbatocanin/portfolio",
       "clear": "__CLEAR__",
+      "exit": "__EXIT__",
       "date": new Date().toUTCString(),
     };
     input.addEventListener("keydown", function(e) {
@@ -1704,6 +1825,7 @@
         result = fuzzy ? commands[fuzzy] : "command not found: " + cmd + "\ntry: help";
       }
       if (result === "__CLEAR__") { output.textContent = ""; return; }
+      if (result === "__EXIT__") { document.getElementById("terminal-wrap").classList.remove("open"); return; }
       if (cmd === "sudo hire vladimir") {
         setTimeout(function(){ window.location.href = "mailto:vlad.batocanin@gmail.com"; }, 1800);
       }
