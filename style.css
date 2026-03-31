@@ -251,8 +251,20 @@ html.light .mobile-menu { background: rgba(247, 245, 240, 0.95); }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .hero-desc { font-size: 14px; color: var(--muted); max-width: 560px; line-height: 1.85; font-weight: 300; }
 .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-.tag { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; transition: border-color 0.2s, color 0.2s; }
+.tag { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; transition: border-color 0.2s, color 0.2s; position: relative; }
 .tag:hover { border-color: var(--accent); color: var(--accent); }
+.tag[data-def]::after {
+  content: attr(data-def);
+  position: absolute; top: calc(100% + 7px); left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--bg-card); color: var(--text);
+  font-size: 10px; padding: 5px 9px; border-radius: 5px;
+  border: 1px solid var(--border); white-space: nowrap;
+  opacity: 0; pointer-events: none; z-index: 200;
+  transition: opacity 0.22s, transform 0.28s cubic-bezier(0.22,1,0.36,1);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+.tag[data-def]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 .deco-row { display: flex; align-items: center; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
 .deco-item { display: flex; align-items: center; gap: 10px; }
@@ -443,7 +455,7 @@ section.visible { animation: fadein 0.7s ease forwards; }
 @keyframes line-grow { 0% { width: 0; opacity: 1; } 70% { width: 16px; opacity: 1; } 88%, 100% { width: 0; opacity: 0; } }
 
 .projects-list { display: flex; flex-direction: column; }
-.project-row { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; padding: 1.75rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; align-items: start; }
+.project-row { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 1.75rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; align-items: start; }
 .project-row:first-child { border-top: 1px solid var(--border); }
 .project-title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .project-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; transition: color 0.2s; }
@@ -658,6 +670,54 @@ footer { padding: 3.5rem 0; border-top: 1px solid var(--border); display: flex; 
 #snake-close:hover { border-color: var(--accent); color: var(--accent); }
 #snake-score { font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-top: 4px; }
 
+/* ── Snake D-pad ── */
+#snake-dpad { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 10px auto 4px; width: fit-content; }
+.dpad-row { display: flex; align-items: center; justify-content: center; }
+.dpad-btn {
+  width: 44px; height: 44px; background: var(--bg-card);
+  border: 1px solid var(--border); color: var(--muted);
+  font-size: 14px; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.dpad-btn:active, .dpad-btn.pressed {
+  background: var(--accent); color: var(--bg);
+  transform: scale(0.93);
+}
+.dpad-center { width: 44px; height: 44px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; opacity: 0.3; }
+
+/* ── Touch ripple ── */
+.touch-ripple {
+  position: fixed; pointer-events: none; z-index: 9996;
+  border-radius: 50%; border: 2px solid var(--accent);
+  width: 10px; height: 10px;
+  transform: translate(-50%, -50%) scale(0);
+  animation: touch-ripple-expand 0.55s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+@keyframes touch-ripple-expand {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+  70%  { opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+}
+
+/* ── Mobile toast ── */
+#mobile-toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(12px);
+  background: var(--bg-card); border: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  padding: 8px 16px; border-radius: 20px; z-index: 9993;
+  opacity: 0; transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none; white-space: nowrap;
+}
+#mobile-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Long-press glow on project rows ── */
+.project-row.longpress-glow {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(139,111,232,0.25);
+  transition: box-shadow 0.2s;
+}
+
 /* === NEW JS-powered elements === */
 
 /* Custom cursor */
@@ -690,6 +750,10 @@ html.blackout .cursor-ring { border-color: rgba(255,255,255,0.5); }
 .stack-item::before { content: ""; position: absolute; top: var(--mouse-y, 50%); left: var(--mouse-x, 50%); width: 120px; height: 120px; background: radial-gradient(circle, rgba(139,111,232,0.15) 0%, transparent 70%); border-radius: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
 .stack-item:hover::before { opacity: 1; }
 
+/* Stack item entrance animation (applied via JS) */
+.stack-item.stack-hidden { opacity: 0; transform: translateY(-12px); }
+.stack-item.stack-visible { transition: opacity 0.4s, transform 0.45s cubic-bezier(0.22,1,0.36,1); opacity: 1; transform: translateY(0); }
+
 /* Easter egg overlay */
 .easter-egg-overlay { position: fixed; inset: 0; z-index: 99999; pointer-events: none; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s; }
 .easter-egg-overlay.active { opacity: 1; }
@@ -712,13 +776,13 @@ html.blackout .cursor-ring { border-color: rgba(255,255,255,0.5); }
 #boot-screen {
   position: fixed; inset: 0; z-index: 99998;
   background: #000;
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
   padding: 2.5rem 3.5rem;
   font-family: "IBM Plex Mono", monospace;
   transition: opacity 0.6s ease;
 }
 #boot-screen.fade-out { opacity: 0; pointer-events: none; }
-#boot-lines { display: flex; flex-direction: column; gap: 0.45rem; max-width: 540px; }
+#boot-lines { display: flex; flex-direction: column; gap: 0.45rem; max-width: 540px; width: 100%; }
 .boot-line { font-size: 12px; color: #666; letter-spacing: 0.03em; opacity: 0; transition: opacity 0.08s; }
 .boot-line.show { opacity: 1; }
 .b-ts { color: #333; margin-right: 1rem; }
@@ -920,6 +984,17 @@ html.blackout .cursor-ring { border-color: rgba(255,255,255,0.5); }
 @keyframes ptc-e-tr { 0%{opacity:0;transform:translate(0,0);}15%{opacity:0.7;}85%{opacity:0.5;transform:translate(-7px,7px);}100%{opacity:0;transform:translate(-9px,9px);} }
 @keyframes ptc-e-bl { 0%{opacity:0;transform:translate(0,0);}15%{opacity:0.7;}85%{opacity:0.5;transform:translate(7px,-7px);}100%{opacity:0;transform:translate(9px,-9px);} }
 @keyframes ptc-e-br { 0%{opacity:0;transform:translate(0,0);}15%{opacity:0.7;}85%{opacity:0.5;transform:translate(-7px,-7px);}100%{opacity:0;transform:translate(-9px,-9px);} }
+
+/* Mage scaled up for project icons */
+.mage-lg {
+  transform: scale(1.35);
+  transform-origin: top left;
+  margin-right: 10px;
+}
+.mage-lg .mage-spark { background: var(--accent); }
+.mage-lg .ms1 { width: 4px; height: 4px; animation-duration: 2s; }
+.mage-lg .ms2 { width: 3px; height: 3px; animation-duration: 2.1s; }
+.mage-lg .ms3 { width: 3px; height: 3px; animation-duration: 2.2s; }
 
 @keyframes sparkC {
   0%   { transform: translate(0,0) scale(0.4); opacity: 0; }
