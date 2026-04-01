@@ -159,7 +159,7 @@ html.blackout body > .container { visibility: hidden; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.7; min-height: 100vh; }
 .container { max-width: 860px; margin: 0 auto; padding: 0 3rem; }
-@media (max-width: 400px) { .container { padding: 0 1.25rem; } }
+@media (max-width: 560px) { .container { padding: 0 1.25rem; } }
 @media (min-width: 561px) and (max-width: 900px) { .container { padding: 0 2rem; } }
 
 nav {
@@ -265,6 +265,39 @@ html.light .mobile-menu { background: rgba(247, 245, 240, 0.95); }
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 .tag[data-def]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* on touch/mobile: suppress the floating tooltip and use the inline panel instead */
+@media (hover: none) {
+  .tag[data-def]::after { display: none !important; }
+}
+.tag.tag-active { border-color: var(--accent); color: var(--accent); }
+
+/* inline definition panel shown below hero-tags on touch devices */
+.tag-def-panel {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  font-size: 11px;
+  color: var(--muted);
+  border-left: 2px solid var(--accent);
+  padding: 0 0 0 0.75rem;
+  margin-top: 0;
+  transition:
+    max-height 0.4s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.3s ease,
+    margin-top 0.3s ease,
+    padding 0.3s ease;
+}
+.tag-def-panel.open {
+  max-height: 80px;
+  opacity: 1;
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.5rem 0.4rem 0.75rem;
+}
+@media (hover: none) {
+  .tag-def-panel { display: block; }
+}
 
 .deco-row { display: flex; align-items: center; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
 .deco-item { display: flex; align-items: center; gap: 10px; }

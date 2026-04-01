@@ -481,6 +481,35 @@ function closeMobileMenu() {
   document.querySelectorAll('.hero-tags, .project-tech').forEach(function(el) { tagObs.observe(el); });
 })();
 
+/* ── Mobile tag tap-to-reveal panel ── */
+(function() {
+  if (!isTouch) return;
+  var panel = document.getElementById('tag-def-panel');
+  if (!panel) return;
+  var activeTag = null;
+
+  function closePanel() {
+    panel.classList.remove('open');
+    if (activeTag) { activeTag.classList.remove('tag-active'); activeTag = null; }
+  }
+
+  document.querySelectorAll('.tag[data-def]').forEach(function(tag) {
+    tag.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (activeTag === tag) { closePanel(); return; }
+      if (activeTag) activeTag.classList.remove('tag-active');
+      activeTag = tag;
+      tag.classList.add('tag-active');
+      panel.textContent = tag.getAttribute('data-def');
+      panel.classList.add('open');
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (activeTag && !e.target.closest('.tag[data-def]')) closePanel();
+  });
+})();
+
 /* ── Hero Parallax ── */
 (function() {
   if (isTouch) return;
