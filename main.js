@@ -481,11 +481,12 @@ function closeMobileMenu() {
   document.querySelectorAll('.hero-tags, .project-tech').forEach(function(el) { tagObs.observe(el); });
 })();
 
-/* ── Mobile tag tap-to-reveal panel ── */
+/* ── Tag click-to-reveal definition panel ── */
 (function() {
-  if (!isTouch) return;
   var panel = document.getElementById('tag-def-panel');
-  if (!panel) return;
+  var labelEl = document.getElementById('tag-def-label');
+  var textEl = document.getElementById('tag-def-text');
+  if (!panel || !labelEl || !textEl) return;
   var activeTag = null;
 
   function closePanel() {
@@ -500,8 +501,13 @@ function closeMobileMenu() {
       if (activeTag) activeTag.classList.remove('tag-active');
       activeTag = tag;
       tag.classList.add('tag-active');
-      panel.textContent = tag.getAttribute('data-def');
+      labelEl.textContent = tag.textContent.trim();
+      textEl.textContent = tag.getAttribute('data-def');
       panel.classList.add('open');
+      // scroll panel into view on small screens
+      if (window.innerWidth < 700) {
+        setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+      }
     });
   });
 
