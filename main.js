@@ -308,7 +308,7 @@ function closeMobileMenu() {
   var ctx = canvas.getContext('2d');
   var particles = [];
   var mouseX = -1000, mouseY = -1000;
-  var COUNT = 60, CONNECT = 140, MOUSE_DIST = 180;
+  var COUNT = 110, CONNECT = 200, MOUSE_DIST = 240;
 
   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   resize();
@@ -316,7 +316,7 @@ function closeMobileMenu() {
   document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
 
   for (var i = 0; i < COUNT; i++) {
-    particles.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 2.5 + 1 });
+    particles.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4, r: Math.random() * 2.8 + 1.2 });
   }
 
   function getAccent() {
@@ -332,22 +332,22 @@ function closeMobileMenu() {
       if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
       if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + rgb + ',0.3)'; ctx.fill();
+      ctx.fillStyle = 'rgba(' + rgb + ',0.55)'; ctx.fill();
       for (var j = i + 1; j < particles.length; j++) {
         var q = particles[j];
         var dx = p.x - q.x, dy = p.y - q.y, dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < CONNECT) {
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = 'rgba(' + rgb + ',' + (0.12 * (1 - dist / CONNECT)) + ')';
-          ctx.lineWidth = 1; ctx.stroke();
+          ctx.strokeStyle = 'rgba(' + rgb + ',' + (0.22 * (1 - dist / CONNECT)) + ')';
+          ctx.lineWidth = 1.2; ctx.stroke();
         }
       }
       var dmx = p.x - mouseX, dmy = p.y - mouseY, mDist = Math.sqrt(dmx * dmx + dmy * dmy);
       if (mDist < MOUSE_DIST) {
         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouseX, mouseY);
-        ctx.strokeStyle = 'rgba(' + rgb + ',' + (0.25 * (1 - mDist / MOUSE_DIST)) + ')';
-        ctx.lineWidth = 1.5; ctx.stroke();
-        p.x += dmx * 0.002; p.y += dmy * 0.002;
+        ctx.strokeStyle = 'rgba(' + rgb + ',' + (0.45 * (1 - mDist / MOUSE_DIST)) + ')';
+        ctx.lineWidth = 2; ctx.stroke();
+        p.x += dmx * 0.003; p.y += dmy * 0.003;
       }
     }
     requestAnimationFrame(draw);
@@ -990,6 +990,7 @@ function closeCmdPalette() {
     { g: 'Links',    ico: '↗',  lbl: 'Email',          hint: '',        fn: function() { window.location.href = 'mailto:vlad.batocanin@gmail.com'; } },
     { g: 'Secrets',  ico: '🦆', lbl: 'Launch ducks',   hint: 'Konami',  fn: function() { launchDucks(); } },
     { g: 'Secrets',  ico: '🐍', lbl: 'Play snake',     hint: '',        fn: function() { openSnake(); } },
+    { g: 'Secrets',  ico: '🧙', lbl: 'Paint the Town Crimson', hint: 'WebGL', fn: function() { if(typeof openCrimsonGame==='function') openCrimsonGame(); } },
   ];
 
   var sel = 0, visible = [];

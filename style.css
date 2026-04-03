@@ -1035,3 +1035,95 @@ html.blackout .cursor-ring { border-color: rgba(255,255,255,0.5); }
   65%  { transform: translate(-2px,-17px) scale(1);   opacity: 0.35; }
   100% { transform: translate(-3px,-24px) scale(0.1); opacity: 0; }
 }
+
+/* ══════════════════════════════════════════════════
+   PAINT THE TOWN CRIMSON — WebGL game modal
+   ══════════════════════════════════════════════════ */
+#crimson-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88); z-index: 12000;
+  align-items: center; justify-content: center;
+}
+#crimson-modal.open { display: flex; }
+
+#cg-box {
+  display: flex; flex-direction: column;
+  width: min(96vw, 820px); height: min(92vh, 600px);
+  background: #0e0b12; border: 1.5px solid rgba(139,111,232,0.35);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 0 60px rgba(139,111,232,0.18), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+#cg-titlebar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 14px; background: #130f1a;
+  border-bottom: 1px solid rgba(139,111,232,0.2);
+  flex-shrink: 0;
+}
+#cg-title {
+  font-family: var(--font-mono); font-size: 11px;
+  color: #c084fc; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+#cg-hud-inline {
+  display: flex; align-items: center; gap: 14px;
+  margin-left: auto; margin-right: 10px;
+  font-family: var(--font-mono); font-size: 12px;
+}
+#cg-hp { display: flex; gap: 2px; }
+.cg-hf { color: #e03060; }
+.cg-he { color: #3a2a3a; }
+#cg-score  { color: #a88cf0; }
+#cg-wave   { color: #7060a0; }
+#cg-bombs  { color: #ff6820; letter-spacing: 0.04em; }
+#cg-powerup { color: #50e88a; font-size: 11px; letter-spacing: 0.04em; animation: cg-pu-pulse 0.8s ease-in-out infinite alternate; }
+@keyframes cg-pu-pulse { from { opacity:0.7; } to { opacity:1; } }
+#cg-close {
+  background: none; border: none; cursor: pointer;
+  color: #6b5a7a; font-size: 14px; padding: 2px 4px;
+  line-height: 1; transition: color 0.15s;
+}
+#cg-close:hover { color: #e03060; }
+
+#cg-canvas-wrap {
+  position: relative; flex: 1; min-height: 0;
+}
+#cg-canvas {
+  display: block; width: 100%; height: 100%;
+  cursor: crosshair;
+}
+
+/* Overlay message (wave, game over, win) */
+#cg-msg {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  pointer-events: none; gap: 6px;
+  background: rgba(5,3,9,0.55);
+}
+.cg-mh {
+  font-family: var(--font-mono); font-size: clamp(16px,3vw,26px);
+  color: #e03060; letter-spacing: 0.12em; text-align: center;
+  text-shadow: 0 0 24px #e03060; white-space: pre;
+}
+.cg-ml {
+  font-family: var(--font-mono); font-size: clamp(11px,1.8vw,14px);
+  color: #c084fc; letter-spacing: 0.04em; text-align: center;
+  white-space: pre;
+}
+
+#cg-hint {
+  flex-shrink: 0; padding: 5px 14px;
+  font-family: var(--font-mono); font-size: 10px;
+  color: #4a3a5a; text-align: center; letter-spacing: 0.04em;
+  background: #0a0810;
+  border-top: 1px solid rgba(139,111,232,0.1);
+}
+
+/* Mage hover tooltip */
+.mage.mage-lg:hover { filter: drop-shadow(0 0 8px var(--accent)); }
+
+@media (max-width: 600px) {
+  #cg-hint { display: none; }
+  #cg-box  { width: 100vw; height: 100dvh; border-radius: 0; border: none; }
+}

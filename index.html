@@ -505,6 +505,28 @@
     </div>
   </div>
 
+  <!-- Paint the Town Crimson — WebGL game modal -->
+  <div id="crimson-modal">
+    <div id="cg-box">
+      <div id="cg-titlebar">
+        <span id="cg-title">&#9889; Paint the Town Crimson</span>
+        <div id="cg-hud-inline">
+          <span id="cg-hp"></span>
+          <span id="cg-bombs"></span>
+          <span id="cg-powerup"></span>
+          <span id="cg-score">score: 0</span>
+          <span id="cg-wave"></span>
+        </div>
+        <button id="cg-close" onclick="closeCrimsonGame()" aria-label="Close">&#x2715;</button>
+      </div>
+      <div id="cg-canvas-wrap">
+        <canvas id="cg-canvas"></canvas>
+        <div id="cg-msg" style="display:none"></div>
+      </div>
+      <div id="cg-hint">WASD &mdash; move &nbsp;&bull;&nbsp; Shift &mdash; dash &nbsp;&bull;&nbsp; mouse aim + click &mdash; shoot &nbsp;&bull;&nbsp; Q &mdash; bomb &nbsp;&bull;&nbsp; ESC &mdash; close</div>
+    </div>
+  </div>
+
   <div id="cmd-palette">
     <div id="cmd-box">
       <div id="cmd-search-wrap">
@@ -518,5 +540,6 @@
 
 </div>
 <script src="main.js" defer></script>
+<script src="crimson-game.js" defer></script>
 </body>
 </html>
