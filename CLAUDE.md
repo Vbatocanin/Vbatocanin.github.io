@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal portfolio website for Vladimir Batocanin, deployed via GitHub Pages. The entire site is a **single file**: `index.html`, with all CSS in an inline `<style>` block and all JavaScript at the bottom of the file. There is no build step, no package manager, and no test framework.
+Personal portfolio website for Vladimir Batocanin, deployed via GitHub Pages. The site is split across three files with no build step, no package manager, and no test framework.
 
 ## Deployment
 
@@ -16,21 +16,36 @@ python3 -m http.server
 
 ## Architecture
 
-The site is three files:
+- **`index.html`** — Markup only. Fixed/overlaid elements outside `.container`: boot screen, scroll progress bar, custom cursor (dot + ring), particle canvas, blackout overlay, nav, mobile menu. Inside `.container`: sections `#about`, `#experience`, `#projects`, `#stack`, `#contact`, footer, terminal popup, snake modal, command palette, rage/toast messages.
 
-- **`style.css`** — All styles, ordered roughly as: CSS custom properties (theme vars), component styles (nav, hero, cards, modals), and media queries. Dark mode is the default; light mode is toggled via the `html.light` class. A special `html.blackout` class triggers a full-screen blackout overlay used as a theatrical transition when switching themes.
+- **`style.css`** — All styles. Ordered as: CSS custom properties (theme vars), component styles (nav, hero, cards, modals), animations, media queries. Dark mode is the default; light mode is toggled via the `html.light` class. `html.blackout` triggers a full-screen blackout overlay for the theme transition.
 
-- **`index.html`** — Markup only. Sections in order: `#about`, `#experience`, `#projects`, `#stack`, `#contact`. Each section uses `data-section` attributes for scroll-spy. Fixed/overlaid elements (nav, blackout overlay, terminal popup, snake modal, cursor elements, particle canvas) are declared outside the main `.container`.
+- **`main.js`** — All interactivity (`defer`-loaded). Key systems:
+  - **Boot screen**: typewriter boot sequence on first load; skipped on subsequent visits via `sessionStorage`. Tap/keypress skips it.
+  - **Theme toggle**: `startBlackout()` / `lightOn()` — see Key Interactive Behaviors.
+  - **Audio engine** (`AudioEngine`): Web Audio API sound cues on section reveal; toggled by the mute button.
+  - **Custom cursor**: dot + lagging ring; disabled on touch devices.
+  - **Scroll progress bar**: thin accent bar at top tracking page position.
+  - **Scroll-spy nav**: highlights active section link; auto-hides nav on scroll-down.
+  - **Particle canvas background**: animated floating particles.
+  - **Section reveal animations**: IntersectionObserver adds `.visible` and fires an audio cue.
+  - **Section count-up numbers**: `[data-target]` spans animate to their target value on reveal.
+  - **Terminal**: type `bash` anywhere (not in an input) to open; `Escape` or clicking outside closes it. Supports commands: `help`, `snake`, `clear`.
+  - **Snake game**: triggered from the terminal (`snake` command); playable via arrow keys, D-pad, or swipe.
+  - **Command palette**: `Cmd/Ctrl+K` opens a searchable command list.
+  - **Mobile hamburger menu**: `#nav-hamburger` toggles `#mobile-menu`; `closeMobileMenu()` closes it.
+  - **Konami code**: triggers `launchDucks()` — a duck explosion easter egg.
+  - **Cursor trail**: `Ctrl+T` toggles a neural-net-style trailing dot effect.
+  - **Click sparks**: small particles burst on click.
+  - **3D tilt**: project cards tilt on hover.
+  - **Rage-click detection**: 6+ clicks within 1.2 s shows a tooltip.
+  - **Duck float**: clicking the hero duck triggers a float animation.
+  - **Penguin click counter**: clicking the swordguin spins up an arm animation; 10 clicks triggers a victory toast.
+  - **Barbell scroll-shake**: the barbell SVG glows and shakes based on scroll speed.
+  - **Flying duck animation**: tied to rage-click and Konami code.
+  - **URL param greeting**: `?from=linkedin|github|twitter|cv` swaps the hero eyebrow text.
 
-- **`main.js`** — All interactivity (`defer`-loaded), including:
-   - Custom cursor (dot + trailing ring)
-   - Particle canvas background
-   - Scroll-spy nav highlighting and auto-hide on scroll-down
-   - Dark/light theme toggle with blackout animation sequence
-   - Terminal easter egg (open with `` ` `` key or Konami code)
-   - Snake game easter egg (triggered from the terminal)
-   - Click spark particles and 3D tilt effect on project cards
-   - Rage-click detection, flying duck animation, section count-up numbers
+- **`favicon.svg`** — Inline SVG favicon.
 
 ## CSS Variables (theming)
 
@@ -43,7 +58,7 @@ Overridden under `html.light { ... }` for light mode.
 
 ## Key Interactive Behaviors
 
-- **Theme toggle**: clicking the moon/sun button calls `startBlackout()`, which plays a typewriter animation on the blackout screen, then swaps `html.light` and removes `html.blackout`.
-- **Terminal**: toggled by `` ` `` key; supports commands like `help`, `snake`, `clear`.
-- **Konami code**: triggers an easter egg overlay.
-- **Torch button**: appears on the blackout screen; clicking it calls `lightOn()` to exit the blackout immediately.
+- **Theme toggle**: clicking the moon/sun toggle calls `startBlackout()`. If already in light mode, it switches back to dark directly. Otherwise it adds `html.blackout`, plays a typewriter message, then reveals the candle/torch button. Clicking the torch calls `lightOn()` which removes `html.blackout` and adds `html.light`. The toggle knob slides between moon (dark) and sun (light) positions via CSS.
+- **Terminal**: type `bash` anywhere (focus not on an input) to open. `Escape` or clicking outside closes it.
+- **Konami code** (↑↑↓↓←→←→BA): triggers `launchDucks()`.
+- **Command palette**: `Cmd/Ctrl+K` opens `#cmd-palette`; `Escape` closes it.
