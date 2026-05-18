@@ -1481,30 +1481,26 @@
     if (_g) _g.running = false;
   };
 
-  // Click handler on wizard element
-  document.addEventListener('DOMContentLoaded', function() {
+  // Click/tap handler on wizard element. The mage sits inside an <a> with
+  // target="_blank" — on some mobile browsers the link can race the synthetic
+  // click, so we also short-circuit on touchend.
+  function bindMage() {
     var mage = document.querySelector('.mage.mage-lg');
-    if (mage) {
-      mage.style.cursor = 'pointer';
-      mage.title = 'Play Paint the Town Crimson!';
-      mage.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation();
-        window.openCrimsonGame();
-      });
-    }
-  });
-  // Also try immediately if DOM is already ready
-  (function(){
-    var mage = document.querySelector('.mage.mage-lg');
-    if (mage && !mage._cgBound) {
-      mage._cgBound = true;
-      mage.style.cursor = 'pointer';
-      mage.title = 'Play Paint the Town Crimson!';
-      mage.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation();
-        window.openCrimsonGame();
-      });
-    }
-  })();
+    if (!mage || mage._cgBound) return;
+    mage._cgBound = true;
+    mage.style.cursor = 'pointer';
+    mage.title = 'Play Paint the Town Crimson!';
+    var fire = function(e) {
+      e.preventDefault(); e.stopPropagation();
+      window.openCrimsonGame();
+    };
+    mage.addEventListener('click', fire);
+    mage.addEventListener('touchend', fire, { passive: false });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindMage);
+  } else {
+    bindMage();
+  }
 
 })();
